@@ -65,3 +65,31 @@ class Sphere(object):
                          normal = normal,
                          texcoords = uvs,
                          sceneObj = self)
+
+class Plane(object):
+    def __init__(self, position, normal, material):
+        self.position = position
+        self.normal = normV(normal)
+        self.material = material
+
+    def ray_intersect(self, orig, dir):
+        # Distancia = (( planePos - origRayo) o normal) / (direccionRayo o normal)
+        denom = dotProduct(dir, self.normal)
+
+        if abs(denom) > 0.0001:
+            num = dotProduct(subtractVList(self.position, orig), self.normal) 
+            t = num / denom
+
+            if t > 0:
+                # P = O + t*D
+                P = addVectors(orig, [t * dir[0], t * dir[1], t * dir[2]])
+                return Intersect(distance = t,
+                                 point = P,
+                                 normal = self.normal,
+                                 texcoords = None, # Para aplicar las uvs en todo el plano habria que repetir lq textura 
+                                                   # una y otra vez en el plano
+                                 sceneObj = self)
+
+        return None
+
+
