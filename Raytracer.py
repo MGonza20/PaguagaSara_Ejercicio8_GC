@@ -22,6 +22,7 @@ rtx.envMap = Texture("parkingLot.bmp")
 
 rtx.lights.append( AmbientLight(intensity = 0.1 ))
 rtx.lights.append( DirectionalLight(direction = (-1,-1,-1), intensity = 0.8 ))
+rtx.lights.append( PointLight( point = (0, 0, 0) ))
 
 # rtx.scene.append(Plane(position = (0, -10, 0), normal = (0, 1, 0), material = brick))
 # rtx.scene.append(Plane(position = (-20, 0, 0), normal = (1, 0, 0), material = stone))

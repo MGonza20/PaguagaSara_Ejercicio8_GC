@@ -1,4 +1,5 @@
 
+from multiprocessing import shared_memory
 from mathLib import *
 
 
@@ -157,12 +158,14 @@ class PointLight(object):
 
     def getShadowIntensity(self, intersect, raytracer):
         light_dir = subtractVList(self.point, intersect.point)
-        light_dir = normV(light_dir)
+        light_distance = norm(light_dir)
+        light_dir = [light_dir[0] / light_distance, light_dir[1] / light_distance, light_dir[2] / light_distance]
 
         shadow_intensity = 0
         shadow_intersect = raytracer.scene_intersect(intersect.point, light_dir, intersect.sceneObj)
         if shadow_intersect:
-            shadow_intensity = 1
+            if shadow_intersect.distance < light_distance:
+                shadow_intensity = 1
 
         return shadow_intensity
 
